@@ -4,6 +4,8 @@ import {
   Post,
   Body,
   Headers,
+  Put,
+  Delete,
   UseGuards,
   UseInterceptors,
   Param,
@@ -73,7 +75,7 @@ export class ArticlesController {
   }
 
   @UseGuards(AuthGuard)
-  @Get('/')
+  @Put('/')
   async update(
     @Headers() headers,
     @Body() articleDto: UpdateArticleRequestDto,
@@ -88,7 +90,7 @@ export class ArticlesController {
   }
 
   @UseGuards(AuthGuard)
-  @Get('/')
+  @Delete('/')
   async delete(
     @Headers() headers,
     @Body() articleDto: DeleteArticleRequestDto,
