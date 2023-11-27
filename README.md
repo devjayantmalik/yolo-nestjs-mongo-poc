@@ -11,7 +11,7 @@ Concepts Implementation Requirements:
 Features Needed:
 - User Authentication
 - User Authorization
-- Posts CRUD Endpoint
+- Articles CRUD Endpoint
 - Structured Response States(Both Error and Success)
 - Github Actions Integration
 

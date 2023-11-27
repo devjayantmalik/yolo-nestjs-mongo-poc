@@ -1,19 +1,21 @@
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { EnvironmentService } from './environment/environment.service';
 import * as cookieParser from 'cookie-parser';
+import { DatabaseService } from './core/DatabaseService';
 
 export async function bootstrap<App extends INestApplication>(
   app: App,
 ): Promise<App> {
-  // Get config service to use some configuration properties
+  // load environment service
   const environment = app.get(EnvironmentService);
 
-  const GLOBAL_PREFIX = environment.get('GLOBAL_PREFIX');
+  // connect to database
+  const database = app.get(DatabaseService);
+  await database.connect(environment.get('MONGO_DB_URL'));
 
   // Serve all endpoints under some path prefix.
-  if (GLOBAL_PREFIX) {
-    app.setGlobalPrefix(GLOBAL_PREFIX);
-  }
+  const GLOBAL_PREFIX = '/' + environment.get('GLOBAL_PREFIX');
+  if (GLOBAL_PREFIX) app.setGlobalPrefix(GLOBAL_PREFIX);
 
   // TODO: Add Error Handing Support
 
