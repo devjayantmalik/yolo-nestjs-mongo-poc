@@ -31,6 +31,25 @@ export class ArticlesService {
     };
   }
 
+  async details(
+    user_id: string,
+    article_id: string,
+  ): Promise<ListArticleResponseDto> {
+    const article = await this.articleModel.findOne({
+      owner: user_id,
+      _id: article_id,
+    });
+
+    if(!article) throw new Error("Article with provided id doesn't exist.")
+
+    return {
+      id: article._id.toString(),
+      title: article.title,
+      content: article.content,
+      description: article.description,
+    };
+  }
+
   async list(user_id: string): Promise<ListArticleResponseDto[]> {
     const articles = await this.articleModel.find({ owner: user_id });
 

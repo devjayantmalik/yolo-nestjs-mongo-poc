@@ -2,6 +2,11 @@ import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { EnvironmentService } from './environment/environment.service';
 import * as cookieParser from 'cookie-parser';
 import { DatabaseService } from './core/DatabaseService';
+import {
+  NextFunction,
+  Request as HttpRequest,
+  Response as HttpResponse,
+} from 'express-serve-static-core';
 
 export async function bootstrap<App extends INestApplication>(
   app: App,
@@ -33,6 +38,18 @@ export async function bootstrap<App extends INestApplication>(
   );
 
   app.use(cookieParser());
+
+  // configure error response.
+  app.use(
+    (err: Error, _req: HttpRequest, res: HttpResponse, _next: NextFunction) => {
+      // We can check if err is instance of our custom error
+      // and accordingly set response status code.
+      const message = Array.isArray(err.message)
+        ? err.message.join(', ')
+        : err.message;
+      return res.status(400).json({ success: false, data: {}, error: message });
+    },
+  );
 
   return app;
 }
