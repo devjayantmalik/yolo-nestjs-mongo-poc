@@ -1,0 +1,14 @@
+name: Development Workflow
+on: [push]
+
+jobs:
+  start:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 21.x
+          cache: "npm"
+          cache-dependency-path: "package-lock.json"
+      - run: echo "Jai, Hind!"
