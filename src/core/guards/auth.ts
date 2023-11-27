@@ -13,7 +13,7 @@ export class AuthGuard implements CanActivate {
   }
 
   async validateRequest(request: Request) {
-    if (request.cookies && request.cookies.jwt) return true;
+    if (request.headers && request.headers.authorization) return true;
     return false;
   }
 
@@ -21,16 +21,13 @@ export class AuthGuard implements CanActivate {
     const environment = new EnvironmentService();
     const publicKey = environment.get("JWT_SECRET")
 
-    if (!request.cookies) return false;
+    if (!request.headers.authorization) return false;
 
-    let token = request.cookies.jwt;
-    const verifyOptions: VerifyOptions = {
-      algorithms: ['RS256'],
-    };
-
-    let decodedJwt: any = await verify(token, publicKey, verifyOptions, (error, decoded: any) => {
+    let token = request.headers.authorization;
+    let decodedJwt: any = '';
+    verify(token, publicKey, (error, decoded: any) => {
       if (error) return error;
-      return decoded;
+      decodedJwt = decoded;
     });
 
     // check expiry of jwt

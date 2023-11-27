@@ -1,10 +1,6 @@
-import { Schema, model } from 'mongoose';
-import { UserSchema } from './UserModel';
+import { Schema, model, Types } from 'mongoose';
 
 export const ArticleSchema = new Schema({
-  _id: {
-    type: String,
-  },
   title: {
     type: String,
   },
@@ -14,7 +10,7 @@ export const ArticleSchema = new Schema({
   content: {
     type: String,
   },
-  owner: UserSchema,
+  owner: { type: Types.ObjectId, ref: 'User' },
   is_draft: {
     type: Boolean,
   },

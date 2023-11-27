@@ -1,9 +1,6 @@
 import { Schema, model } from 'mongoose';
 
 export const UserSchema = new Schema({
-  _id: {
-    type: String,
-  },
   fullname: {
     type: String,
   },
@@ -13,9 +10,14 @@ export const UserSchema = new Schema({
   password: {
     type: String,
   },
-  roles: {
-    type: [String],
-  },
+  roles: [{
+    type: String,
+  }],
 });
 
 export const UserModel = model('User', UserSchema);
+
+export enum UserRole {
+  BasicAccount = 'BasicAccount',
+  AdminAccount = 'AdminAccount',
+}

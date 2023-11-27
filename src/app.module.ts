@@ -3,6 +3,7 @@ import { EnvironmentModule } from './environment/environment.module';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { ArticlesModule } from './articles/articles.module';
 import { CoreModule } from './core/core.module';
+import { AccountsModule } from './accounts/accounts.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { CoreModule } from './core/core.module';
 
     CoreModule,
     ArticlesModule,
+    AccountsModule,
   ],
 })
 export class AppModule {}

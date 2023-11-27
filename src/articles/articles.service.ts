@@ -24,7 +24,7 @@ export class ArticlesService {
     });
 
     return {
-      id: article.id,
+      id: article._id.toString(),
       title: article.title,
       content: article.content,
       description: article.description,
@@ -35,7 +35,7 @@ export class ArticlesService {
     const articles = await this.articleModel.find({ owner: user_id });
 
     return articles.map((article) => ({
-      id: article.id,
+      id: article._id.toString(),
       title: article.title,
       content: article.content,
       description: article.description,
