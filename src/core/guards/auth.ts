@@ -1,6 +1,7 @@
 import { Injectable, CanActivate, ExecutionContext, UnauthorizedException, BadRequestException } from '@nestjs/common';
 import { Request } from 'express';
 import { verify, VerifyOptions } from 'jsonwebtoken';
+import { EnvironmentService } from 'src/environment/environment.service';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -17,8 +18,8 @@ export class AuthGuard implements CanActivate {
   }
 
   async verifyJwt(request: Request) {
-
-    const publicKey = 'HARDCODED-FOR-NOW-BUT-CAN-BE-READ-FROM-ENV'
+    const environment = new EnvironmentService();
+    const publicKey = environment.get("JWT_SECRET")
 
     if (!request.cookies) return false;
 

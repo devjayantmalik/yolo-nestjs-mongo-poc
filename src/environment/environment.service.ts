@@ -16,6 +16,8 @@ export class EnvironmentService {
       MONGO_DB_URL: envalid.url(),
       PORT: envalid.num(),
       NODE_ENV: envalid.str(),
+      JWT_EXPIRY_MINS: envalid.num(),
+      JWT_SECRET: envalid.str(),
     });
 
     const apiUrl = new URL(env.API_URL);
@@ -33,7 +35,9 @@ export class EnvironmentService {
     };
   }
 
-  get<Property extends keyof EnvConfig>(configProperty: Property): EnvConfig[Property] {
+  get<Property extends keyof EnvConfig>(
+    configProperty: Property,
+  ): EnvConfig[Property] {
     return this.env[configProperty];
   }
 }

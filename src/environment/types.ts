@@ -6,4 +6,6 @@ export interface EnvConfig {
   readonly GLOBAL_PREFIX?: string;
   readonly PORT: number;
   readonly NODE_ENV: string;
+  readonly JWT_EXPIRY_MINS: number;
+  readonly JWT_SECRET: string;
 }

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Headers } from '@nestjs/common';
+import { Controller, Get, Post, Body, Headers, UseGuards } from '@nestjs/common';
 import { Throttle } from '@nestjs/throttler';
 import { ArticlesService } from './articles.service';
 import { CreateArticleRequestDto } from './dto/create-article.request.dto';
@@ -6,6 +6,7 @@ import { CreateArticleResponseDto } from './dto/create-article.response.dto';
 import { ListArticleResponseDto } from './dto/list-article.response.dto';
 import { UpdateArticleRequestDto } from './dto/update-article.request.dto';
 import { DeleteArticleRequestDto } from './dto/delete-article.request.dto';
+import { AuthGuard } from 'src/core/guards/auth';
 
 @Controller('articles')
 export class ArticlesController {
@@ -13,6 +14,7 @@ export class ArticlesController {
 
   // We override global rate limit to 5 Requests every 5 minutes.
   @Throttle({ default: { limit: 5, ttl: 5 * 60 * 1000 } })
+  @UseGuards(AuthGuard)
   @Post('/')
   async create(
     @Body() articleDto: CreateArticleRequestDto,
@@ -27,6 +29,7 @@ export class ArticlesController {
     }
   }
 
+  @UseGuards(AuthGuard)
   @Get('/')
   async list(@Headers() headers): Promise<ListArticleResponseDto[]> {
     try {
@@ -38,6 +41,7 @@ export class ArticlesController {
     }
   }
 
+  @UseGuards(AuthGuard)
   @Get('/')
   async update(
     @Headers() headers,
@@ -52,6 +56,7 @@ export class ArticlesController {
     }
   }
 
+  @UseGuards(AuthGuard)
   @Get('/')
   async delete(
     @Headers() headers,
